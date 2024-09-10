@@ -14,27 +14,42 @@ const run = async () => {
     console.log('Skipping drop...');
   }
 
-  const user = new User({
+  const firstUser = new User({
     username: 'user',
     password: '123',
   });
-  user.generateToken();
-  await user.save();
+  firstUser.generateToken();
+  await firstUser.save();
+
+  const secondUser = new User({
+    username: 'den',
+    password: 'newpassword',
+  });
+  secondUser.generateToken();
+  await secondUser.save();
 
   const firstTask = new Task({
-    user: user._id,
-    title: 'Сходить в магазиг',
+    user: firstUser._id,
+    title: 'Сходить в магазин',
     description: 'Купить продукты',
     status: 'complete'
   });
   await firstTask.save();
 
   const secondTask = new Task({
-    user: user._id,
+    user: firstUser._id,
     title: 'Сделать ДЗ',
     description: 'Выполнить лабу',
   });
   await secondTask.save();
+
+  const thirdTask = new Task({
+    user: secondUser._id,
+    title: 'Помочь родителям',
+    description: 'Сделать заготвки на зиму',
+    status: 'in_progress'
+  });
+  await thirdTask.save();
 
   await db.close();
 };

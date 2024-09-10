@@ -12,3 +12,9 @@ export interface UserMethods {
 }
 
 export type UserModel = Model<UserFields, {}, UserMethods>;
+
+export interface TaskMutation {
+  title: string;
+  description: string | null;
+  status: string;
+}
